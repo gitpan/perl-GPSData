@@ -2,7 +2,7 @@
 # All rights reserved. This program is free software;
 # you can redistribute it and/or modify it under the same terms as Perl itself.
 #
-# $Id: Data.pm,v 1.11.2.3 2003/04/11 11:13:29 nfn Exp $
+# $Id: Data.pm,v 1.14 2003/04/13 13:27:42 nfn Exp $
 #
 
 package Geo::GPS::Data;
@@ -11,7 +11,7 @@ use Geo::GPS::Data::Storage;
 use Geo::GPS::Data::Waypoint;
 use Geo::GPS::Data::Collection;
 
-our $VERSION = '0.03';
+our $VERSION = '0.04';
 
 #######################################
 sub new {

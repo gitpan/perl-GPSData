@@ -2,7 +2,7 @@
 # All rights reserved. This program is free software; 
 # you can redistribute it and/or modify it under the same terms as Perl itself.
 #
-# $Id: Search.pm,v 1.1 2003/03/20 17:17:12 nfn Exp $
+# $Id: Search.pm,v 1.2 2003/04/13 13:27:42 nfn Exp $
 #
 
 package Geo::GPS::Data::Search;
@@ -10,3 +10,5 @@ package Geo::GPS::Data::Search;
 use strict;
 use Date::Manip;
 use Geo::GPS::Data::Storage::MySQL;
+
+our $VERSION = '0.04';

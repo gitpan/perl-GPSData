@@ -1,7 +1,12 @@
 This is a Perl package designed to make it possible to organize a waypoint, route or track-log collection.
 It may even manage other types of waypoint groups.
+
 For now it only supports mysql as a storage medium for the collection, but it was built with ease of extension in mind so it should (hopefully) be easy to write other storage modules to support whatever makes your fancy. Actualy there is one other storage medium available which is RAM storage, but this is only provided for testing the module.
+
 This package was written to be used by a project of mine (MyGPSDatabase) but when I started writing it I immediately saw it's possibilities for reuse in other situations and decided to post it to CPAN.
+
 If you like it and extend it in any way you find useful please feel free to send me your code for integration in the package (as soon as I find the time to do it, of course... :)).
+
 Comments, help, praise and constructive criticism should be sent to nfmnunes@cpan.org, flames and such like should be sent to slash.dev@slash.null.
+
 In the goodies directory there are some scripts I find helpfull while developing the package and also a file called schema.sql with the actual mysql commands used to create the database necessary for the tests to run on.

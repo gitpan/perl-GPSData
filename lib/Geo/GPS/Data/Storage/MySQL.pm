@@ -2,10 +2,12 @@
 # All rights reserved. This program is free software;
 # you can redistribute it and/or modify it under the same terms as Perl itself.
 #
-# $Id: MySQL.pm,v 1.16.2.2 2003/04/11 11:10:41 nfn Exp $
+# $Id: MySQL.pm,v 1.19 2003/04/13 13:27:42 nfn Exp $
 #
 
 package Geo::GPS::Data::Storage::MySQL;
+
+our $VERSION = '0.04';
 
 use strict;
 use Date::Manip;

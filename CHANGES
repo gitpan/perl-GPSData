@@ -1,5 +1,10 @@
 perl-GPSData
 
+---- v 0.04 ()
+-Forced the timezone to GMT in the tests in order to prevent hosts which do not have any timezone configured to fail the tests. This bug was caught by the CPAN testers team, thanks guys! :)
+-Remembered to add a version to every module so that a search in CPAN should now return a proper list of modules;
+-make test now automagically skipps the mysql tests if it cannot connect to a propper database on localhost;
+
 ---- v 0.03 (Apr 11 2003)
 -Implemented the Collection class functionalities, which forced me to clean up a lot of other stuff;
 -Finaly added the license text! :)

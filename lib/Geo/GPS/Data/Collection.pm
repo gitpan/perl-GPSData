@@ -2,10 +2,12 @@
 # All rights reserved. This program is free software;
 # you can redistribute it and/or modify it under the same terms as Perl itself.
 #
-# $Id: Collection.pm,v 1.3.2.4 2003/04/11 11:11:54 nfn Exp $
+# $Id: Collection.pm,v 1.7 2003/04/13 13:27:42 nfn Exp $
 #
 
 package Geo::GPS::Data::Collection;
+
+our $VERSION = '0.04';
 
 use strict;
 use Date::Manip;
@@ -328,7 +330,6 @@ if (!$a->{point} || !$a->{point}->isa('Geo::GPS::Data::Waypoint')) {
 
 my $id = $a->{point}->id() || return 0;
 foreach (@{$s->{points}}) {
-    print "Comparing $_ with $id...\n";
     if ($_ == $id) { return 1 }
 };
 return 0;

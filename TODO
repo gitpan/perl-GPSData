@@ -4,7 +4,6 @@ Anyway, on with the To-Do / whish list:
 -The search module is still empty;
 -Specific Groups (routes and track-logs) are not yet implemented. They are next on the list;
 -The pods could be substantially better. I know this but I whish to see if anyone actually complains. I don't expect to get a large audience for this package and depending in the mileage of those who may get to use it this may be enough... Yes, I should be ashamed of myself; :)
--Test to see if a correct database actualy exists before runing the storage_mysql tests...
 -Fully document the parameters taken by every method and (even more important) all the return values;
 -Sync the POD files with the actual code;
--Make the collection tests more covilized (not comparing objects contents directly) and use something like a Test::Herness module to call the same test file but with different storage instances instead of simply duplicating the code).
+-Make the collection tests more civilized (not comparing objects contents directly) and use something like a Test::Harness module to call the same test file but with different storage instances instead of simply duplicating the code).

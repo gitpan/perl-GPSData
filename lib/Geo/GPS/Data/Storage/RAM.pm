@@ -2,10 +2,12 @@
 # All rights reserved. This program is free software;
 # you can redistribute it and/or modify it under the same terms as Perl itself.
 #
-# $Id: RAM.pm,v 1.5.2.1 2003/04/11 11:13:29 nfn Exp $
+# $Id: RAM.pm,v 1.8 2003/04/13 13:27:42 nfn Exp $
 #
 
 package Geo::GPS::Data::Storage::RAM;
+
+our $VERSION = '0.04';
 
 use strict;
 use Date::Manip;

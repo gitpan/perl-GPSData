@@ -1,6 +1,12 @@
-#$Id: 01_collections_RAM.t,v 1.2.2.3 2003/04/11 11:07:34 nfn Exp $
+#$Id: 01_collections_RAM.t,v 1.5 2003/04/13 13:27:42 nfn Exp $
 
 use Test::More tests=>39;
+
+# This is an ugly hack used to make sure the test doesn't crash due to a
+# mal-configuration of the machine it runs on. If there is no TimeZone
+# configured it will die, so just for the sake of the tests I force a
+# TimeZone of GMT.
+$ENV{TZ} = 'GMT';
 
 ####
 BEGIN { use_ok(Geo::GPS::Data); };

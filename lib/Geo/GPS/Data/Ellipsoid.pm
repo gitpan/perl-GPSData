@@ -2,10 +2,12 @@
 # All rights reserved. This program is free software; 
 # you can redistribute it and/or modify it under the same terms as Perl itself.
 #
-# $Id: Ellipsoid.pm,v 1.2 2003/03/20 17:14:08 nfn Exp $
+# $Id: Ellipsoid.pm,v 1.3 2003/04/13 13:27:42 nfn Exp $
 #
 
 package Geo::GPS::Data::Ellipsoid;
+
+our $VERSION = '0.04';
 
 sub new {
 	my $s = shift;

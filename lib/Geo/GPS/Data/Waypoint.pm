@@ -2,7 +2,7 @@
 # All rights reserved. This program is free software; 
 # you can redistribute it and/or modify it under the same terms as Perl itself.
 #
-# $Id: Waypoint.pm,v 1.12.2.1 2003/04/11 08:11:17 nfn Exp $
+# $Id: Waypoint.pm,v 1.15 2003/04/13 13:27:42 nfn Exp $
 #
 
 package Geo::GPS::Data::Waypoint;
@@ -10,6 +10,8 @@ package Geo::GPS::Data::Waypoint;
 use strict;
 use Date::Manip;
 use Geo::GPS::Data::Ellipsoid;
+
+our $VERSION = '0.04';
 
 #######################################
 sub new {
