@@ -2,20 +2,13 @@
 
 =head1 NAME
 
-Geo::GPS::Data::Storage::MySQL - MySQL storage module for the perl-GPSData package.
+Geo::GPS::Data::Storage::RAM - RAM storage module for the perl-GPSData package.
 
 =head1 SYNOPSIS
 
-  use Geo::GPS::Data::Storage::MySQL;
+  use Geo::GPS::Data::Storage::RAM;
 
-  my %href = (
-    database => 'gpsdata',
-    host => 'localhost',
-    username => 'gpsuser',
-    password => 'mypasswd'
-  );
-  my $d = Geo::GPS::Data->new([\%href]);
-  $m = Geo::GPS::Data::Storage::MySQL->new();
+  $m = Geo::GPS::Data::Storage::RAM->new();
 
   $waypt_types = $m->waypoint_types();
 
@@ -35,7 +28,7 @@ Geo::GPS::Data::Storage::MySQL - MySQL storage module for the perl-GPSData packa
 =head1 DESCRIPTION
 
 This is an internal module of the perl-GPSData package and should not be used directly by a program.
-This module implements the storage methods on a mysql database.
+This module implements the storage methods on RAM which is not very usefull for anything other than testing. :)
 
 =head1 AUTHOR
 

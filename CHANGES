@@ -1,0 +1,15 @@
+perl-GPSData
+
+
+---- v 0.01 (Mar 26 2003)
+-The glorious first release which failed the make test because of a storage dependency on mysql which I overlooked.
+-Only handled waypoints and only to some degree.
+
+---- v 0.02 (Mar 29 2003)
+-Implemented a new storage method (RAM) which is used for the automated tests (whoch now pass!);
+-Created a new class (Geo::GPS::Data::Storage) which handles the instantiating of the correct Storage sub-class object;
+-The storage class choice is now influenced by parameters passed on the constructor of the Geo::GPS::Data object;
+-Cleaner use of $@ to pass errors backwards;
+-Cleaner class inner-structure specially in the Geo::GPS::Data::Waypoint class;
+-Better error messages;
+

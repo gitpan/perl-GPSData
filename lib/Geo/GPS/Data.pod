@@ -8,7 +8,16 @@ Geo::GPS::Data - General interface for the perl-GPSData package.
 
   use Geo::GPS::Data;
 
-  my $d = Geo::GPS::Data->new();
+  my %href = (
+    storage => 'MySQL',
+    storage_params => {
+      database => 'gpsdata',
+      host => 'localhost',
+      username => 'gpsuser',
+      password => 'mypasswd',
+    }
+  );
+  my $d = Geo::GPS::Data->new([\%href]);
 
   my $wp_raw_data = {
     'name'=> 'Test_Waypoint',
@@ -28,7 +37,7 @@ Geo::GPS::Data - General interface for the perl-GPSData package.
 This object is the primary interface to the whole perl-GPSData system.
 It is used to instantiate waypoint, route, track-log or waypoint-group objects which will then be manipulated on their own.
 Data searches are also done via this module.
-You should never use the other objects directly as their interface is not garanteed to be backward compatible in the future. This objects interface, however will not change unless some major (and I mean MAJOR) reason presents itself.
+You should never use the other objects directly as their interface is not garanteed to be backward compatible in the future. This object's interface, however will not change unless some major (and I mean MAJOR) reason presents itself.
 When this object is created it also defines which storage mechanism will be used for it's data.
 
 

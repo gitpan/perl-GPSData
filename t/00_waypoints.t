@@ -1,4 +1,4 @@
-#$Id: 00_waypoints.t,v 1.3 2003/03/26 00:39:41 nfn Exp $
+#$Id: 00_waypoints.t,v 1.4 2003/03/28 00:46:32 nfn Exp $
 
 use Test::More tests=>9;
 
@@ -28,7 +28,7 @@ isa_ok($wp_object, 'Geo::GPS::Data::Waypoint');
 ok (!$wp_object->type('wong_type'), 'invalid type()');
 
 ####
-ok ($wp_object->type('test'), 'type()') || diag($@);
+ok ($wp_object->type('none'), 'type()') || diag($@);
 
 ####
 ok ($wp_object->name('Nametest1'), 'name()') || diag($@);

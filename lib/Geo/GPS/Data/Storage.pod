@@ -1,0 +1,35 @@
+=pod
+
+=head1 NAME
+
+Geo::GPS::Data::Storage - Generic storage mechanism manager for the perl-GPSData package.
+
+=head1 SYNOPSIS
+
+  use Geo::GPS::Data::Storage;
+
+  my %href = (
+    storage => 'MySQL',
+    storage_params => {
+      database => 'gpsdata',
+      host => 'localhost',
+      username => 'gpsuser',
+      password => 'mypasswd',
+    }
+  );
+  my $store_object = Geo::GPS::Data::Storage->new([\%href]);
+
+=head1 DESCRIPTION
+
+This class acts as a sort of multiplexer, choosing which storage class to instantiate based on the parameters given and returning an object of the right class.
+
+=head1 AUTHOR
+
+Nuno Nunes, E<lt>nfmnunes@cpan.orgE<gt>
+
+=head1 SEE ALSO
+
+L<Geo::GPS::Data>.
+
+=cut
+

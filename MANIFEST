@@ -1,3 +1,4 @@
+CHANGES
 MANIFEST
 README
 TODO
@@ -11,8 +12,12 @@ lib/Geo/GPS/Data/Route.pm
 lib/Geo/GPS/Data/Route.pod
 lib/Geo/GPS/Data/Search.pm
 lib/Geo/GPS/Data/Search.pod
+lib/Geo/GPS/Data/Storage.pm
+lib/Geo/GPS/Data/Storage.pod
 lib/Geo/GPS/Data/Storage/MySQL.pm
 lib/Geo/GPS/Data/Storage/MySQL.pod
+lib/Geo/GPS/Data/Storage/RAM.pm
+lib/Geo/GPS/Data/Storage/RAM.pod
 lib/Geo/GPS/Data/TrackLog.pm
 lib/Geo/GPS/Data/TrackLog.pod
 lib/Geo/GPS/Data/Waypoint.pm

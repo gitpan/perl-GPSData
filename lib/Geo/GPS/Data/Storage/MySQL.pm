@@ -2,7 +2,7 @@
 # All rights reserved. This program is free software; 
 # you can redistribute it and/or modify it under the same terms as Perl itself.
 #
-# $Id: MySQL.pm,v 1.8 2003/03/26 00:29:56 nfn Exp $
+# $Id: MySQL.pm,v 1.12 2003/03/28 00:42:53 nfn Exp $
 #
 
 package Geo::GPS::Data::Storage::MySQL;
@@ -14,19 +14,45 @@ use DBI;
 #######################################
 sub new {
 	my $s = shift;
+	my $a = shift;
 
-	return bless {}, $s;
+	my $data;
+	if ($a->{database}) {
+		$data->{config}{_DBNAME}=$a->{database}
+	} else {
+		$data->{config}{_DBNAME}='gpsdata'
+	};
+	if ($a->{host}) {
+		$data->{config}{_DBHOST}=$a->{host}
+	} else {
+		$data->{config}{_DBHOST}='localhost'
+	};
+	if ($a->{username}) {
+		$data->{config}{_DBUSERNAME}=$a->{username}
+	} else {
+		$data->{config}{_DBUSERNAME}='gpstst'
+	};
+	if ($a->{password}) {
+		$data->{config}{_DBPASSWD}=$a->{password}
+	} else {
+		$data->{config}{_DBPASSWD}='zbr.zbr'
+	};
+	return bless $data, $s;
 };
 
 #######################################
 sub _init {
         my $s = shift;
-
-        if (!$s->{DBH}) {
-                $s->{DBH} = DBI->connect('dbi:mysql:database=gpsdata;host=localhost',
-                        'gpstst', 'zbr.zbr', {RaiseError => 1});
+ 
+ 	use Data::Dumper;
+        if (!$s->{cache}{DBH}) {
+                $s->{cache}{DBH} = DBI->connect(
+			'dbi:mysql:database='.$s->{config}{_DBNAME}.';host='.$s->{config}{_DBHOST},
+                        $s->{config}{_DBUSERNAME},
+			$s->{config}{_DBPASSWD},
+			{RaiseError => 1});
         };
-        return $s->{DBH};
+        return $s->{cache}{DBH};
 };
 
 #######################################
@@ -34,23 +60,24 @@ sub waypoint_types {
         my $s = shift;
 
 	$@=undef;
-        if (!$s->{WAYPOINT_TYPES}) {
+        if (!$s->{cache}{WAYPOINT_TYPES}) {
                 my $dbh = $s->_init;
                 eval {
                         my $sth = $dbh->prepare(qq{
-                                SELECT LOWER(name) AS name, id
+                                SELECT LOWER(name) AS name, id, comment
                                 FROM waypoint_types
                         });
                         $sth->execute();
 			while (my $a = $sth->fetchrow_hashref) {
-                        	push @{$s->{WAYPOINT_TYPES}}, $a;
+                        	push @{$s->{cache}{WAYPOINT_TYPES}}, $a;
 			}
                 };
                 if ($@) {
+			$@ = "Geo::GPS::Data::Storage::MySQL: $@";
                         return 0;
                 };
         };
-        return $s->{WAYPOINT_TYPES};
+        return $s->{cache}{WAYPOINT_TYPES};
 };
 
 #######################################
@@ -60,23 +87,23 @@ sub store_waypoint {
 	
 	$@=undef;
 	if (!$a->{name}) {
-                $@ = "Missing data: name";
+                $@ = "Geo::GPS::Data::Storage::MySQL: Missing data: name";
                 return 0;
         };
 	if (!$a->{latitude}) {
-                $@ = "Missing data: latitude";
+                $@ = "Geo::GPS::Data::Storage::MySQL: Missing data: latitude";
                 return 0;
         };
 	if (!$a->{longitude}) {
-                $@ = "Missing data: longitude";
+                $@ = "Geo::GPS::Data::Storage::MySQL: Missing data: longitude";
                 return 0;
         };
 	if (!$a->{type_id}) {
-                $@ = "Missing data: type_id";
+                $@ = "Geo::GPS::Data::Storage::MySQL: Missing data: type_id";
                 return 0;
         };
 	if (!$a->{ellipsoid}) {
-                $@ = "Missing data: ellipsoid";
+                $@ = "Geo::GPS::Data::Storage::MySQL: Missing data: ellipsoid";
                 return 0;
         };
 	my $date;
@@ -85,7 +112,7 @@ sub store_waypoint {
 		if ($date) {
 			$date = &UnixDate($date, "%q");
 		} else {
-			$@ = "Received an invalid date: ".$a->{date_collected};
+			$@ = "Geo::GPS::Data::Storage::MySQL: Received an invalid date: ".$a->{date_collected};
 			return 0;
 		}
 	};
@@ -118,6 +145,7 @@ sub store_waypoint {
 	                );
 	        };
 	        if ($@) {
+			$@ = "Geo::GPS::Data::Storage::MySQL: $@";
 	                return 0;
 	        };
 		return $a->{id};
@@ -142,6 +170,7 @@ sub store_waypoint {
 	                $wp_id = $dbh->{mysql_insertid};
 	        };
 	        if ($@) {
+			$@ = "Geo::GPS::Data::Storage::MySQL: $@";
 	                return 0;
 	        };
 	
@@ -156,7 +185,7 @@ sub retrieve_waypoint {
 
 	$@=undef;
         if (!$a->{id}) {
-                $@ = "Missing required parameter: id";
+                $@ = "Geo::GPS::Data::Storage::MySQL: Missing required parameter: id";
                 return 0;
         };
 
@@ -180,6 +209,7 @@ sub retrieve_waypoint {
                 $r = $sth->fetchall_hashref('id')->{$a->{id}};
         };
         if ($@) {
+		$@ = "Geo::GPS::Data::Storage::MySQL: $@";
                 return 0;
         };
 	$r->{date_collected} = &UnixDate($r->{date_collected}, "%c");
@@ -193,12 +223,11 @@ sub delete_waypoint {
 
 	$@=undef;
         if (!$a->{id}) {
-                $@ = "Missing required parameter: id";
+                $@ = "Geo::GPS::Data::Storage::MySQL: Missing required parameter: id";
                 return 0;
         };
 
         my $dbh = $s->_init();
-        my $r;
         eval {
                 my $sth = $dbh->prepare(qq{
 			DELETE
@@ -209,6 +238,7 @@ sub delete_waypoint {
                 $sth->execute($a->{id});
         };
         if ($@) {
+		$@ = "Geo::GPS::Data::Storage::MySQL: $@";
                 return 0;
         };
         return 1;

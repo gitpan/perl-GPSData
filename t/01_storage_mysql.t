@@ -1,13 +1,14 @@
-#$Id: 01_storage_mysql.t,v 1.2 2003/03/26 00:40:05 nfn Exp $
+#$Id: 01_storage_mysql.t,v 1.5 2003/03/29 14:28:36 nfn Exp $
 
-#use Test::More tests=>9;
 use Test::More skip_all => "Must test for the database existence first";
 
 ####
 BEGIN { use_ok(Geo::GPS::Data); };
 
 ####
-my $d = Geo::GPS::Data->new();
+my $d = Geo::GPS::Data->new({
+	storage=>'MySQL'
+});
 isa_ok($d, 'Geo::GPS::Data');
 
 ####

@@ -8,7 +8,16 @@ Geo::GPS::Data::Waypoint - Waypoint management for the perl-GPSData package.
 
   use Geo::GPS::Data::Waypoint;
 
-  $w = Geo::GPS::Data::Waypoint->new();
+  my %href = (
+    storage => 'MySQL',
+    storage_params => {
+      database => 'gpsdata',
+      host => 'localhost',
+      username => 'gpsuser',
+      password => 'mypasswd',
+    }
+  );
+  $w = Geo::GPS::Data::Waypoint->new([\%href]);
 
   $res = $w->name($name);
   $res = $w->name({name=>$name});
