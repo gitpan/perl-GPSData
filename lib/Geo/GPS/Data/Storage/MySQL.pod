@@ -1,0 +1,42 @@
+=pod
+
+=head1 NAME
+
+Geo::GPS::Data::Storage::MySQL - MySQL storage module for the perl-GPSData package.
+
+=head1 SYNOPSIS
+
+  use Geo::GPS::Data::Storage::MySQL;
+
+  $m = Geo::GPS::Data::Storage::MySQL->new();
+
+  $waypt_types = $m->waypoint_types();
+
+  $id = $m->store_waypoint({
+        name=>$name,
+        latitude=>$lat,
+        longitude=>$lon,
+        comment=>$comm,
+        type_id=>$type_id,
+        date_collected=>$d_col,
+        ellipsoid=>$ell_id
+        });
+
+  $res = retrieve_waypoint({id=>$id});
+  $res = delete_waypoint({id=>$id});
+
+=head1 DESCRIPTION
+
+This is an internal module of the perl-GPSData package and should not be used directly by a program.
+This module implements the storage methods on a mysql database.
+
+=head1 AUTHOR
+
+Nuno Nunes, E<lt>nfmnunes@cpan.orgE<gt>
+
+=head1 SEE ALSO
+
+L<Geo::GPS::Data>, L<Geo::GPS::Data::Waypoint>.
+
+=cut
+

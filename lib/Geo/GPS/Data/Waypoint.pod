@@ -1,0 +1,78 @@
+=pod
+
+=head1 NAME
+
+Geo::GPS::Data::Waypoint - Waypoint management for the perl-GPSData package.
+
+=head1 SYNOPSIS
+
+  use Geo::GPS::Data::Waypoint;
+
+  $w = Geo::GPS::Data::Waypoint->new();
+
+  $res = $w->name($name);
+  $res = $w->name({name=>$name});
+  $name = $w->name();
+
+  $res = $w->latitude($latitude);
+  $res = $w->latitude({latitude=>$latitude});
+  $latitude = $w->latitude();
+
+  $res = $w->longitude($longitude);
+  $res = $w->longitude({longitude=>$longitude});
+  $longitude = $w->longitude();
+
+  $res = $w->comment($comment);
+  $res = $w->comment({comment=>$comment});
+  $comment = $w->comment();
+
+  $res = $w->type($type_name);
+  $res = $w->type({type=>$type_name});
+  $res = $w->type({type=>$type_id});
+  $type_name = $w->type();
+
+  $res = $w->date_collected($date_collected);
+  $res = $w->date_collected({date_collected=>$date_collected});
+  $date_collected = $w->date_collected();
+
+  $res = $w->ellipsoid($ellipsoid_name);
+  $res = $w->ellipsoid({ellipsoid=>$ellipsoid_id});
+  $ellipsoid_name = $w->ellipsoid();
+
+  $id = $w->id();
+
+  $res = $w->create({
+        name=>$name,
+        latitude=>$latitude,
+        longitude=>$longitude,
+        type=>$type,
+        ellipsoid=>$ellipsoid,
+        comment=>$comment,
+        date_collected=>$date_collected
+  });
+
+  $res = $w->save();
+
+  $res = $w->delete();
+
+  $href = $w->hash_dump();
+  
+
+=head1 DESCRIPTION
+
+This object is created and returned by an Geo::GPS::Data object and may thereaft
+er be manipulated by the program.
+It represents a waypoint and knows how to create itself from scratch, retrieve i
+t's own data from storage, change all it's relevant information and save the upd
+ated information back on the chosen storage.
+
+
+=head1 AUTHOR
+
+Nuno Nunes, E<lt>nfmnunes@cpan.orgE<gt>
+
+=head1 SEE ALSO
+
+L<Geo::GPS::Data>, L<Geo::GPS::Data::Ellipsoid>, L<Geo::GPS::Data::Storage::MySQL>.
+
+=cut

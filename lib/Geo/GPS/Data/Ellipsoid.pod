@@ -1,0 +1,61 @@
+=pod
+
+=head1 NAME
+
+Geo::GPS::Data::Ellipsoid - Ellipsoid management for the perl-GPSData package.
+
+=head1 SYNOPSIS
+
+  use Geo::GPS::Data::Ellipsoid;
+
+  $e = Geo::GPS::Data::Ellipsoid->new();
+
+  $id = id_from_ellipsoid({ellipsoid=>$ell_name});
+
+  $ell_name = ellipsoid_from_id({id=>$id});
+
+  $arr_ref = list_ellipsoids();
+  
+=head1 DESCRIPTION
+
+This is an internal module of the perl-GPSData package and should not be used directly by a program.
+This module implements the list of currently supported ellipsoids.
+Since this list changes seldom (if ever at all) it is hardwired in the module instead of being in the storage used.
+The supported ellipsoids at this moment are:
+1 - Airy;
+2 - Australian National;
+3 - Bessel 1841;
+4 - Bessel 1841 (Nambia);
+5 - Clarke 1866;
+6 - Clarke 1880;
+7 - Everest;
+8 - Fischer 1960 (Mercury);
+9 - Fischer 1968;
+10 - GRS 1967;
+11 - GRS 1980;
+12 - Helmert 1906;
+13 - Hough;
+14 - International;
+15 - Krassovsky;
+16 - Modified Airy;
+17 - Modified Everest;
+18 - Modified Fischer 1960;
+19 - South American 1969;
+20 - WGS 60;
+21 - WGS 66;
+22 - WGS-72;
+23 - WGS-84.
+
+This list was shamelessly stolen from the Geo::Coordinates::UTM module. :)
+
+
+=head1 AUTHOR
+
+Nuno Nunes, E<lt>nfmnunes@cpan.orgE<gt>
+
+=head1 SEE ALSO
+
+L<Geo::GPS::Data>, L<Geo::GPS::Data::Waypoint>.
+
+=cut
+

@@ -1,0 +1,22 @@
+=pod
+
+=head1 NAME
+
+Geo::GPS::Data::Search - Search interface for all types of data in the perl-GPSData package.
+
+=head1 SYNOPSIS
+
+
+=head1 DESCRIPTION
+
+
+=head1 AUTHOR
+
+Nuno Nunes, E<lt>nfmnunes@cpan.orgE<gt>
+
+=head1 SEE ALSO
+
+L<Geo::GPS::Data>.
+
+=cut
+

@@ -1,0 +1,44 @@
+=pod
+
+=head1 NAME
+
+Geo::GPS::Data - General interface for the perl-GPSData package.
+
+=head1 SYNOPSIS
+
+  use Geo::GPS::Data;
+
+  my $d = Geo::GPS::Data->new();
+
+  my $wp_raw_data = {
+    'name'=> 'Test_Waypoint',
+    'latitude' => 41.123,
+    'longitude' => -7.123,
+    'date_collected' => scalar localtime,
+    'type_id' => 1,
+    'ellipsoid' => 'WGS-84'
+  };
+  my $wp = $d->add_waypoint($wp_raw_data) || die "Error creating new waypoint: $@";
+
+  my $wp = $d->get_waypoint({id => $wpt_id}) || die "Error retreiving waypoint: $@";
+
+
+=head1 DESCRIPTION
+
+This object is the primary interface to the whole perl-GPSData system.
+It is used to instantiate waypoint, route, track-log or waypoint-group objects which will then be manipulated on their own.
+Data searches are also done via this module.
+You should never use the other objects directly as their interface is not garanteed to be backward compatible in the future. This objects interface, however will not change unless some major (and I mean MAJOR) reason presents itself.
+When this object is created it also defines which storage mechanism will be used for it's data.
+
+
+=head1 AUTHOR
+
+Nuno Nunes, E<lt>nfmnunes@cpan.orgE<gt>
+
+=head1 SEE ALSO
+
+L<perl>, L<Geo::GPS::Data::Waypoint>, L<Geo::GPS::Data::Route>, L<Geo::GPS::Data::TrackLog>, L<Geo::GPS::Data::WptGroup>, L<Geo::GPS::Data::Search>.
+
+=cut
+
