@@ -2,7 +2,7 @@
 # All rights reserved. This program is free software; 
 # you can redistribute it and/or modify it under the same terms as Perl itself.
 #
-# $Id: Waypoint.pm,v 1.10 2003/03/28 19:07:29 nfn Exp $
+# $Id: Waypoint.pm,v 1.12.2.1 2003/04/11 08:11:17 nfn Exp $
 #
 
 package Geo::GPS::Data::Waypoint;
@@ -10,7 +10,6 @@ package Geo::GPS::Data::Waypoint;
 use strict;
 use Date::Manip;
 use Geo::GPS::Data::Ellipsoid;
-use Geo::GPS::Data::Storage;
 
 #######################################
 sub new {
@@ -19,26 +18,13 @@ sub new {
 
 	$@=undef;
 	my $data = {};
-	if ($a->{storage_params}) {
-		$data->{config}{STORAGE_PARAMS} = $a->{storage_params};
-	};
 	if ($a->{storage}) {
-		$data->{config}{STORAGE} = $a->{storage};
+		$data->{cache}{STORAGE} = $a->{storage};
+	} else {
+		$@ = "Geo::GPS::Data::Waypoint: missing argument storage in call to new()";
+		return 0;
 	}
         return bless $data, $s;
-};
-
-#######################################
-sub _init {
-        my $s = shift;
-
-        if (!$s->{cache}{STORAGE}) {
-		$s->{cache}{STORAGE} = Geo::GPS::Data::Storage->new({
-			storage => $s->{config}{STORAGE},
-			storage_params => $s->{config}{STORAGE_PARAMS}
-		});
-        };
-        return $s->{cache}{STORAGE};
 };
 
 #######################################
@@ -46,9 +32,9 @@ sub _init {
 sub _waypoint_types {
         my $s = shift;
 
+	my $store = $s->{cache}{STORAGE};
         if (!$s->{cache}{WAYPOINT_TYPES}) {
-		my $st = $s->_init();
-                $s->{cache}{WAYPOINT_TYPES} = $st->waypoint_types();
+                $s->{cache}{WAYPOINT_TYPES} = $store->waypoint_types();
         };
         return $s->{cache}{WAYPOINT_TYPES};
 };
@@ -69,7 +55,7 @@ sub name {
 				$@ = "Name too big";
 				return 0;
 			};
-			$s->{data}{name} = lc($a->{name});
+			$s->{data}{name} = $a->{name};
 		} else {
 			if (!$a) {
 				$@ = "Geo::GPS::Data::Waypoint: Did not receive required parameter: name";
@@ -79,7 +65,8 @@ sub name {
 				$@ = "Geo::GPS::Data::Waypoint: Name too big";
 				return 0;				
 			};
-			$s->{data}{name} = lc($a);
+			$s->{data}{name} = $a;
+			return 1;
 		};
 	} else {
 		return $s->{data}{name};
@@ -105,6 +92,7 @@ sub latitude {
 				return 0;
 			};
 			$s->{data}{latitude} = $a;
+			return 1;
 		};
 	} else {
 		return $s->{data}{latitude};
@@ -130,6 +118,7 @@ sub longitude {
 				return 0;
 			};
 			$s->{data}{longitude} = $a;
+			return 1;
 		};
 	} else {
 		return $s->{data}{longitude};
@@ -152,7 +141,7 @@ sub comment {
 				$@ = "Geo::GPS::Data::Waypoint: Comment too big";
 				return 0;
 			};
-			$s->{data}{comment} = lc($a->{comment});
+			$s->{data}{comment} = $a->{comment};
 		} else {
 			if (!$a) {
 				$s->{data}{comment} = '';
@@ -162,7 +151,7 @@ sub comment {
 				$@ = "Geo::GPS::Data::Waypoint: Comment too big";
 				return 0;				
 			};
-			$s->{data}{comment} = lc($a);
+			$s->{data}{comment} = $a;
 		};
 		return 1;
 	} else {
@@ -313,7 +302,7 @@ sub create {
 	my $s = shift;
 	my $a = shift;
 
-	# Compulsory items
+	# Mandatory items
 	$s->name($a) || return 0;
 	$s->latitude($a) || return 0;
 	$s->longitude($a) || return 0;
@@ -330,7 +319,7 @@ sub create {
 sub save {
         my $s = shift;
 
-        my $store = $s->_init();
+        my $store = $s->{cache}{STORAGE};
         my $id = $store->store_waypoint($s->{data}) || return 0;
 	$s->{data}{id} = $id;
         return $id;
@@ -340,7 +329,7 @@ sub save {
 sub delete {
         my $s = shift;
 
-        my $store = $s->_init();
+        my $store = $s->{cache}{STORAGE};
         my $id = $store->delete_waypoint($s->{data}) || return 0;
         return 1;
 };
@@ -356,7 +345,7 @@ sub load {
 		return 0;
 	}
 		
-        my $store = $s->_init();
+    my $store = $s->{cache}{STORAGE};
 	my $b = $store->retrieve_waypoint($a) || return 0;
 	
 	$s->{data}{id} = $b->{id};

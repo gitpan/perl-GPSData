@@ -8,43 +8,27 @@ Geo::GPS::Data::Waypoint - Waypoint management for the perl-GPSData package.
 
   use Geo::GPS::Data::Waypoint;
 
-  my %href = (
-    storage => 'MySQL',
-    storage_params => {
-      database => 'gpsdata',
-      host => 'localhost',
-      username => 'gpsuser',
-      password => 'mypasswd',
-    }
-  );
-  $w = Geo::GPS::Data::Waypoint->new([\%href]);
+  $w = Geo::GPS::Data::Waypoint->new({storage => $storage_object});
 
-  $res = $w->name($name);
   $res = $w->name({name=>$name});
   $name = $w->name();
 
-  $res = $w->latitude($latitude);
   $res = $w->latitude({latitude=>$latitude});
   $latitude = $w->latitude();
 
-  $res = $w->longitude($longitude);
   $res = $w->longitude({longitude=>$longitude});
   $longitude = $w->longitude();
 
-  $res = $w->comment($comment);
   $res = $w->comment({comment=>$comment});
   $comment = $w->comment();
 
-  $res = $w->type($type_name);
   $res = $w->type({type=>$type_name});
   $res = $w->type({type=>$type_id});
   $type_name = $w->type();
 
-  $res = $w->date_collected($date_collected);
   $res = $w->date_collected({date_collected=>$date_collected});
   $date_collected = $w->date_collected();
 
-  $res = $w->ellipsoid($ellipsoid_name);
   $res = $w->ellipsoid({ellipsoid=>$ellipsoid_id});
   $ellipsoid_name = $w->ellipsoid();
 
@@ -62,6 +46,8 @@ Geo::GPS::Data::Waypoint - Waypoint management for the perl-GPSData package.
 
   $res = $w->save();
 
+  $res = $w->load();
+
   $res = $w->delete();
 
   $href = $w->hash_dump();
@@ -75,6 +61,190 @@ It represents a waypoint and knows how to create itself from scratch, retrieve i
 t's own data from storage, change all it's relevant information and save the upd
 ated information back on the chosen storage.
 
+=head2 Class Methods
+
+=over
+
+=item new()
+
+Creates a new object from scratch, without any parameters and without any values and returns it.
+Takes as parameters the storage object to use (see L<Geo::GPS::Data::Storage>).
+
+=item name()
+
+  $ok = $waypoint->name(name=>'my favourite waypoint');
+  OR
+  $name = $waypoint->name();
+
+When called with an argument sets the name of the waypoint to that argument's value, otherwise, if no argument is passed to it returns the current name of the waypoint.
+This is a required value, any valid waypoint object must have this field set to something.
+The maximum size of the waypoint is fixed at 40 characters (at this time, if this bugs you let me know what size of waypoint name your GPS supports and I'll revise it).
+
+=item latitude()
+
+  $ok = $waypoint->latitude(latitude=>7.88423);
+  OR
+  $latitude = $waypoint->latitude();
+
+When called with an argument sets the latitude value of the waypoint to that argument's value, otherwise, if no argument is passed to it returns the current latitude of the waypoint.
+This is a required value, any valid waypoint object must have this field set to something.
+This field is a floating-point number and it's precise meaning will depend on the ellipsoid used (see ellipsoid() bellow).
+
+=item longitude()
+
+  $ok = $waypoint->longitude(latitude=>-3.88423);
+  OR
+  $longitude = $waypoint->longitude();
+
+When called with an argument sets the longitude value of the waypoint to that argument's value, otherwise, if no argument is passed to it returns the current longitude of the waypoint.
+This is a required value, any valid waypoint object must have this field set to something.
+This field is a floating-point number and it's precise meaning will depend on the ellipsoid used (see ellipsoid() bellow).
+
+=item comment()
+
+  $ok = $waypoint->comment(comment=>'this is a test waypoint');
+  OR
+  $comment = $waypoint->comment();
+
+Sets the waypoint comment (if there is a parameter) or returns it (if no parameter is passed to it).
+This is an optional value for a waypoint and may be empty.
+At this time there is a limit of 255 characters on the comment value, if this bugs you let me know the maximum size of your GPS's comment field and I'll revise this.
+
+=item type()
+
+  $ok = $waypoint->type(type=>'campground');
+  OR
+  $ok = $waypoint->type(type_id=>3);
+  OR
+  $type = $waypoint->type();
+
+If passed a parameter sets the type of the waypoint to it (if it exists), otherwise, if no parameter is used, it returs the current type of thw waypoint.
+This is a required value, any valid waypoint object must have this field set to something.
+To get a list of all the supported types see the waypoint_types() method in L<Geo::GPS::Data::Storage>.
+
+=item date_collected()
+
+  $ok = $waypoint->date_collected(date_collected=>localtime(time()));
+  OR
+  $ok = $waypoint->date_collected(localtime(time()));
+  OR
+  $date_collected = $waypoint->date_collected();
+
+Sets the date when the waypoint was collected if given a parameter or returns it if no parameter is given.
+This is an optional value for a waypoint and may be empty.
+For a description of date formats supported see L<Date::Manip>.
+
+=item ellipsoid()
+
+  $ok = $waypoint->ellipsoid(ellipsoid=>4);
+  OR
+  $ellipsoid_name = $waypoint->ellipsoid();
+
+Sets the ellipsoid to be used for this waypoint if a parameter is used. This parameter is the ID of the ellipsoid to use, for a list of supported ellipsoids and their IDs see L<Geo::GPS::Data::Ellipsoid>.
+If no argument is passed, returs the name of the ellipsoid associated with this waypoint's data.
+This is a required value, any valid waypoint object must have this field set to something.
+
+=item id()
+
+  $waypoint_id = $waypoint->id();
+
+This method takes no parameters and is read-only. It returns the waypoint's ID.
+The ID is first assigned when the object is first save()d, not when it is created with new().
+Thereafter the ID will be the same for the rest of the waypoint's life (in this storage class, at least).
+
+=item create()
+
+  $hash_ref = {
+    name => 'WPName',
+    latitude => 12.3325,
+    longitude => -4.324,
+    type_id => 1,
+    ellipsoidid => 28
+  };
+  $ok = $waypoint->create($hash_ref);
+
+This method fills in a newly created and empty waypoint object. It should be called right after the new() method when you wish to create a fresh waypoint, not when you wish to recall an old waypoint from storage, for that use load().
+
+B<Required Arguments>
+
+=over
+
+=item name
+
+See name();
+
+=item latitude
+
+See latitude();
+
+=item longitude
+
+See longitude();
+
+=item type OR type_id
+
+See type();
+
+=item ellipsoidid
+
+See ellipsoid();
+
+=back
+
+B<Optional Arguments>
+
+=over
+
+=item comment
+
+See comment();
+
+=item date_collected
+
+See date_collected();
+
+=back
+
+=item save()
+
+  $id = $waypoint->save();
+
+Commits the waypoint to storage and returns it's ID. If this is the first time this waypoint is being stored on this storage the ID will be assigned a new value, otherwise it will be kept the same as it was before.
+No parameters are used as the storage setup was already taken care of in the new() method.
+
+=item delete()
+
+  $ok = $waypoint->delete();
+
+Permanently deletes the waypoint from storage. It does not destroy or clean the waypoint object itself.
+
+=item load()
+
+  $ok = $waypoint->load(id=>28);
+
+Retrieves the data regarding to the waypoint whose ID is passed as parameter and instantiates it in ths waypoint object. Should be called right after the new() method.
+
+=item hash_dump()
+
+  $hash_ref = $waypoint->hash_dump();
+
+Returns an hash reference containing all the values of the waypoint.
+
+=back
+
+=head2 Error Handling
+
+If any method should encounter an error it will return a value of 0 and set the $@ variable to the error message. If you get an 0 value don't just assume it is an error without knowing for sure that it could never be a valid result. When in doubt always check $@ for a value, if it is defined with anything at all there was an error.
+
+=head1 TODO
+
+=over
+
+=item Make the "name" size parametrizable?
+
+=item Make the "comment" size parametrizable?
+
+=back
 
 =head1 AUTHOR
 
@@ -82,6 +252,6 @@ Nuno Nunes, E<lt>nfmnunes@cpan.orgE<gt>
 
 =head1 SEE ALSO
 
-L<Geo::GPS::Data>, L<Geo::GPS::Data::Ellipsoid>, L<Geo::GPS::Data::Storage::MySQL>.
+L<Geo::GPS::Data>, L<Geo::GPS::Data::Ellipsoid>, L<Geo::GPS::Data::Storage>, L<Date::Manip>.
 
 =cut

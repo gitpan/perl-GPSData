@@ -1,4 +1,4 @@
-# $Id: schema.sql,v 1.5 2003/03/26 00:24:59 nfn Exp $
+# $Id: schema.sql,v 1.7 2003/03/31 16:42:45 nfn Exp $
 
 CREATE DATABASE IF NOT EXISTS gpsdata;
 
@@ -26,9 +26,9 @@ CREATE TABLE waypoint_types (
 	comment varchar(255)
 );
 
-DROP TABLE IF EXISTS groups;
+DROP TABLE IF EXISTS collections;
 
-CREATE TABLE groups (
+CREATE TABLE collections (
 	id integer UNSIGNED NOT NULL AUTO_INCREMENT PRIMARY KEY,
         name char(40) NOT NULL,
 	type char(10) NOT NULL,
@@ -40,9 +40,9 @@ DROP TABLE IF EXISTS belongs;
 
 CREATE TABLE belongs (
 	waypoint_id integer UNSIGNED NOT NULL,
-	group_id integer UNSIGNED NOT NULL,
-	sequence integer UNSIGNED NOT NULL,
-	PRIMARY KEY (waypoint_id, group_id, sequence)
+	collection_id integer UNSIGNED NOT NULL,
+	sequence integer UNSIGNED,
+	UNIQUE (waypoint_id, collection_id, sequence)
 );
 
 INSERT INTO waypoint_types VALUES (0, 'None', 'Default type');

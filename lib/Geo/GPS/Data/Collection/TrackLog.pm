@@ -2,11 +2,12 @@
 # All rights reserved. This program is free software; 
 # you can redistribute it and/or modify it under the same terms as Perl itself.
 #
-# $Id: Route.pm,v 1.2 2003/03/20 17:18:50 nfn Exp $
+# $Id: TrackLog.pm,v 1.3 2003/03/30 22:00:46 nfn Exp $
 #
 
-package Geo::GPS::Data::Route;
+package Geo::GPS::Data::Collection::TrackLog;
 
 use strict;
 use Date::Manip;
-use Geo::GPS::Data::Storage::MySQL;
+
+our @ISA = 'Geo::GPS::Data::Collection';

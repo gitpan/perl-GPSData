@@ -1,6 +1,6 @@
-#$Id: 01_storage_mysql.t,v 1.5 2003/03/29 14:28:36 nfn Exp $
+#$Id: 10_waypoints_MySQL.t,v 1.6.2.1 2003/04/09 16:28:13 nfn Exp $
 
-use Test::More skip_all => "Must test for the database existence first";
+use Test::More skip_all => "Must test for database existence before";
 
 ####
 BEGIN { use_ok(Geo::GPS::Data); };

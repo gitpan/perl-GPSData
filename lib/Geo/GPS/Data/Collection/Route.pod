@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Geo::GPS::Data::WptGroup - Generic waypoint group manager for the perl-GPSData package.
+Geo::GPS::Data::Colletion::Route - Route manager for the perl-GPSData package.
 
 =head1 SYNOPSIS
 

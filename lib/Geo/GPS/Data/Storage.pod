@@ -22,6 +22,81 @@ Geo::GPS::Data::Storage - Generic storage mechanism manager for the perl-GPSData
 =head1 DESCRIPTION
 
 This class acts as a sort of multiplexer, choosing which storage class to instantiate based on the parameters given and returning an object of the right class.
+It also acts as a template providing the names of methods the subclasses are required to implement.
+
+=head2 Class Methods
+
+=over
+
+=item new()
+
+Creates an object of the right subclass (according to the parameters) and returns it.
+
+Tha parameters are passed as an hash reference and are as follows:
+
+=over
+
+=item B<storage>
+
+The storage type you wish to use for the data you are going to manipulate. At this time two classes of storage exist:
+
+=over
+
+=item RAM
+
+Totally volatile, usefull mainly for testing and debugging; This storage class takes no other parameters.
+
+=item MySQL
+
+You need to have a mysql database setup properly for this storage method to work. Look in the distribution (probably under the goodies directory) for the schema for the database. This storage class takes an optional set of parameters described below.
+
+=back
+
+=item B<storage_params>
+
+Usefull to configure a storage class that takes parameters.
+
+For the list of required and optional parameters please look into the relevant L<Geo::GPS::Data::Storage::*> class' documentation.
+
+=back
+
+=item waypoint_types()
+
+A method that all sublclasses must implement. This method returns a list of the supported waypoint types for this storage class.
+
+=item store_waypoint()
+
+A method that all sublclasses must implement. This method stores a waypoint.
+
+=item retrieve_waypoint()
+
+A method that all sublclasses must implement. This method retrieves a waypoint's information from storage.
+
+=item delete_waypoint()
+
+A method that all sublclasses must implement. This method permanently deletes a waypont's information from storage.
+
+=item exists_waypoint()
+
+A method that all sublclasses must implement. This method checks if a given waypoint exists in storage.
+
+=item store_collection()
+
+A method that all sublclasses must implement. This method stores information about a collection of waypoints.
+
+=item retrieve_collection()
+
+A method that all sublclasses must implement. This method retrieves the information about a waypoint collection from storage.
+
+=item delete_collection()
+
+A method that all sublclasses must implement. This method permanently deletes a waypont collection's information from storage.
+
+=item exists_collection()
+
+A method that all sublclasses must implement. This method checks if a given waypoint existon in storage.
+
+=back
 
 =head1 AUTHOR
 
@@ -29,7 +104,7 @@ Nuno Nunes, E<lt>nfmnunes@cpan.orgE<gt>
 
 =head1 SEE ALSO
 
-L<Geo::GPS::Data>.
+L<Geo::GPS::Data>, L<Geo::GPS::Data::Storage::RAM>, L<Geo::GPS::Data::Storage::MySQL>.
 
 =cut
 

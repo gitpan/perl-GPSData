@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Geo::GPS::Data::TrackLog - TrackLog manager for the perl-GPSData package.
+Geo::GPS::Data::Collection - Generic waypoint group manager for the perl-GPSData package.
 
 =head1 SYNOPSIS
 

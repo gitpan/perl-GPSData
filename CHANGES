@@ -1,9 +1,13 @@
 perl-GPSData
 
+---- v 0.03 (Apr 11 2003)
+-Implemented the Collection class functionalities, which forced me to clean up a lot of other stuff;
+-Finaly added the license text! :)
+-The collection management has been made more generic and this unfortunately led to some minor changes in the database schema;
+-Radical change in the way the storage is handled in order to maintain persistence in storage classes such as RAM;
+-Created the storage class and made it a "object factory" that decides the correct type of storage to use and instantiates it;
+-Stoped converting everything into lowercasae, I now store data as it is handled to me and compare it using lowercase;
 
----- v 0.01 (Mar 26 2003)
--The glorious first release which failed the make test because of a storage dependency on mysql which I overlooked.
--Only handled waypoints and only to some degree.
 
 ---- v 0.02 (Mar 29 2003)
 -Implemented a new storage method (RAM) which is used for the automated tests (whoch now pass!);
@@ -13,3 +17,6 @@ perl-GPSData
 -Cleaner class inner-structure specially in the Geo::GPS::Data::Waypoint class;
 -Better error messages;
 
+---- v 0.01 (Mar 26 2003)
+-The glorious first release which failed the make test because of a storage dependency on mysql which I overlooked.
+-Only handled waypoints and only to some degree.

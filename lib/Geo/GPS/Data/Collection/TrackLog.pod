@@ -2,7 +2,7 @@
 
 =head1 NAME
 
-Geo::GPS::Data::Route - Route manager for the perl-GPSData package.
+Geo::GPS::Data::Collection::TrackLog - TrackLog manager for the perl-GPSData package.
 
 =head1 SYNOPSIS
 

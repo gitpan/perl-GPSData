@@ -1,4 +1,4 @@
-#$Id: 00_waypoints.t,v 1.4 2003/03/28 00:46:32 nfn Exp $
+#$Id: 00_waypoints_RAM.t,v 1.4 2003/03/28 00:46:32 nfn Exp $
 
 use Test::More tests=>9;
 

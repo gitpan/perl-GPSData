@@ -1,8 +1,10 @@
 This package is still in it's infancy and these first releases are still pretty much alpha and serves first and foremost as a proof of concept and as a test-bed to try and catch as many mistakes and problems as possible so don't hold any features and especially any interfaces as sacred/written in stone. Things will probably change a lot before this is even deemed beta code!
 Anyway, on with the To-Do / whish list:
 
--The search module is empty, I know what I want it to do at first but I didn't want to delay the first alpha release just to wait for it, there are more important things to test than that;
--Groups (generic, routes and track-logs) are not yet implemented. They are next on the list;
+-The search module is still empty;
+-Specific Groups (routes and track-logs) are not yet implemented. They are next on the list;
 -The pods could be substantially better. I know this but I whish to see if anyone actually complains. I don't expect to get a large audience for this package and depending in the mileage of those who may get to use it this may be enough... Yes, I should be ashamed of myself; :)
--Test to see if a correctly created database actualy exists before runing the storage_mysql tests...
--Fully document the parameters taken by every method and (even more important) all the return values.
+-Test to see if a correct database actualy exists before runing the storage_mysql tests...
+-Fully document the parameters taken by every method and (even more important) all the return values;
+-Sync the POD files with the actual code;
+-Make the collection tests more covilized (not comparing objects contents directly) and use something like a Test::Herness module to call the same test file but with different storage instances instead of simply duplicating the code).

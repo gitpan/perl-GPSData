@@ -10,9 +10,9 @@ Geo::GPS::Data::Ellipsoid - Ellipsoid management for the perl-GPSData package.
 
   $e = Geo::GPS::Data::Ellipsoid->new();
 
-  $id = id_from_ellipsoid({ellipsoid=>$ell_name});
+  $id = id_from_ellipsoid(ellipsoid=>$ell_name);
 
-  $ell_name = ellipsoid_from_id({id=>$id});
+  $ell_name = ellipsoid_from_id(id=>$id);
 
   $arr_ref = list_ellipsoids();
   
@@ -22,29 +22,56 @@ This is an internal module of the perl-GPSData package and should not be used di
 This module implements the list of currently supported ellipsoids.
 Since this list changes seldom (if ever at all) it is hardwired in the module instead of being in the storage used.
 The supported ellipsoids at this moment are:
-1 - Airy;
-2 - Australian National;
-3 - Bessel 1841;
-4 - Bessel 1841 (Nambia);
-5 - Clarke 1866;
-6 - Clarke 1880;
-7 - Everest;
-8 - Fischer 1960 (Mercury);
-9 - Fischer 1968;
-10 - GRS 1967;
-11 - GRS 1980;
-12 - Helmert 1906;
-13 - Hough;
-14 - International;
-15 - Krassovsky;
-16 - Modified Airy;
-17 - Modified Everest;
-18 - Modified Fischer 1960;
-19 - South American 1969;
-20 - WGS 60;
-21 - WGS 66;
-22 - WGS-72;
-23 - WGS-84.
+
+=over
+
+=item 1 - Airy;
+
+=item 2 - Australian National;
+
+=item 3 - Bessel 1841;
+
+=item 4 - Bessel 1841 (Nambia);
+
+=item 5 - Clarke 1866;
+
+=item 6 - Clarke 1880;
+
+=item 7 - Everest;
+
+=item 8 - Fischer 1960 (Mercury);
+
+=item 9 - Fischer 1968;
+
+=item 10 - GRS 1967;
+
+=item 11 - GRS 1980;
+
+=item 12 - Helmert 1906;
+
+=item 13 - Hough;
+
+=item 14 - International;
+
+=item 15 - Krassovsky;
+
+=item 16 - Modified Airy;
+
+=item 17 - Modified Everest;
+
+=item 18 - Modified Fischer 1960;
+
+=item 19 - South American 1969;
+
+=item 20 - WGS 60;
+
+=item 21 - WGS 66;
+
+=item 22 - WGS-72;
+
+=item 23 - WGS-84.
+
+=back
 
 This list was shamelessly stolen from the Geo::Coordinates::UTM module. :)
 

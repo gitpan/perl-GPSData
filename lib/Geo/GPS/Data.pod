@@ -30,15 +30,91 @@ Geo::GPS::Data - General interface for the perl-GPSData package.
   my $wp = $d->add_waypoint($wp_raw_data) || die "Error creating new waypoint: $@";
 
   my $wp = $d->get_waypoint({id => $wpt_id}) || die "Error retreiving waypoint: $@";
+  my $wp_col_raw_data = {
+    name => 'Test Collection',
+    date_collected => $second_date,
+    comment => 'Nice random collection just for testing.'
+  };
+  my $wp_col = $d->add_collection($wp_col_raw_data);
 
 
 =head1 DESCRIPTION
 
 This object is the primary interface to the whole perl-GPSData system.
 It is used to instantiate waypoint, route, track-log or waypoint-group objects which will then be manipulated on their own.
+
 Data searches are also done via this module.
+
 You should never use the other objects directly as their interface is not garanteed to be backward compatible in the future. This object's interface, however will not change unless some major (and I mean MAJOR) reason presents itself.
+
 When this object is created it also defines which storage mechanism will be used for it's data.
+
+
+=head2 Class Methods
+
+=over
+
+=item new()
+
+  use Geo::GPS::Data;
+
+  my %href = (
+    storage => 'MySQL',
+    storage_params => {
+      database => 'gpsdata',
+      host => 'localhost',
+      username => 'gpsuser',
+      password => 'mypasswd',
+    }
+  );
+  my $d = Geo::GPS::Data->new([\%href]);
+
+All arguments are optional. Returns an Geo::GPS::Data-class object.
+
+The possible arguments and their possible values are detailed in the L<Geo::GPS::Data::Storage> class' documentation.
+
+=item add_waypoint()
+
+  my $wp_raw_data = {
+    'name'=> 'Test_Waypoint',
+    'latitude' => 41.123,
+    'longitude' => -7.123,
+    'date_collected' => scalar localtime,
+    'type_id' => 1,
+    'ellipsoid' => 'WGS-84'
+  };
+  my $wp = $d->add_waypoint($wp_raw_data) || die "Error creating new waypoint: $@";
+
+Creates a new waypoint and fills it in with the data passed to it. This is the way to create new waypoints to add to the database. The newly-created waypoint will not yet have an ID, this will be added to it when the waypoint is saved into storage.
+
+If successfull returns the newly-created waypoint object, otherwise the method returns with a value of 0 and with an error message in $@.
+
+For the list of required and optional parameters please see the create() method in L<Geo::GPS::Data::Waypoint>.
+
+=item get_waypoint()
+
+  my $wp_object_2 = $d->get_waypoint(id => 5);
+
+Retrieves a waypoint from storage and returns a new waypoint object created with the retrieved data. If there is an error this method returns a value of 0 and there is an error message in $@.
+
+For the list of required and optional parameters please see the load() function in L<Geo::GPS::Data::Waypoint>. 
+
+=item add_collection()
+
+  my $wp_col_raw_data = {
+    name => 'Test Collection',
+    date_collected => $second_date,
+    comment => 'Nice random collection just for testing.'
+  };
+  my $wp_col = $d->add_collection($wp_col_raw_data);
+
+Creates a new waypoint collection and fills it in with the data passed to it. This is the way to create new collection to add to the database. The newly-created waypoint collection will not yet have an ID, this will be added to it when the collection is saved into storage.
+
+If successfull returns the newly-created collection object, otherwise the method returns with a value of 0 and with an error message in $@.
+
+For the list of required and optional parameters please see the create() method in L<Geo::GPS::Data::Collection>.
+
+=back
 
 
 =head1 AUTHOR
@@ -47,7 +123,7 @@ Nuno Nunes, E<lt>nfmnunes@cpan.orgE<gt>
 
 =head1 SEE ALSO
 
-L<perl>, L<Geo::GPS::Data::Waypoint>, L<Geo::GPS::Data::Route>, L<Geo::GPS::Data::TrackLog>, L<Geo::GPS::Data::WptGroup>, L<Geo::GPS::Data::Search>.
+L<Geo::GPS::Data::Waypoint>, L<Geo::GPS::Data::Route>, L<Geo::GPS::Data::TrackLog>, L<Geo::GPS::Data::Collection>, L<Geo::GPS::Data::Search>, L<Geo::GPS::Data::Storage>.
 
 =cut
 
